@@ -9,13 +9,40 @@
     
 </head>
 <body>
-    <div id="background">
+   
         <div id="startScreen">
+            <h1>Grumpy C(h)at</h1>
+            <img class="follower" src="images/follower.png">
+            <div class="followRequest">
+                <h3><strong>__Kitty_3000_xoxo</strong><br> wants to follow you.</h3>
+                <p>123 followers 12 posts</p>
+            
+                <div class="buttons">
+                    <button id="start">Accept</button>
+                    <button class="quit">Block</button>
+                </div>
+            </div>
 
-
-            <button id="start">Start Game</button>
-            <canvas id="myCanvas" width="700" height="400"></canvas>
+            <div class="intro">
+                <p><h2>Sometimes social media can get just too much, even for internet celeb Grumpy Cat.<br><i>Use the Arrow keys to move left and right and hit spacebar to jump. Grumpy Cat needs to dodge these messages that keep popping in.</i> </h2>
+                </p>
+            </div>
         </div>
+
+        <div id="endScreen">
+            <h1>Game Over</h1>
+            <img class="follower" src="images/grumpyCat.png">
+            <div class="followRequest">
+            
+                <div class="buttons">
+                    <button id="restart">Start again</button>
+                    <button class="quit">Quit</button>
+                </div>
+            </div>
+        </div>
+    
+    <div id="background">
+    <canvas id="myCanvas" width="700" height="400"></canvas>
     </div>
 
     

@@ -1,3 +1,8 @@
+body{
+    
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
 #background {
     
     background:url("../Images/bg.png") center no-repeat;
@@ -7,9 +12,49 @@
 }
 
 #startScreen{
-    background
-
+    background:url("../Images/bg.png") center no-repeat;
+    width: 800px;
+    height: 500px;
 }
+
+#endScreen{
+    background:black;
+    width: 800px;
+    height: 500px;  
+}
+
+
+h1{
+    color: white;
+    text-align: center;
+    padding: 30px;
+}
+
+h2{
+    color: white;
+    text-align: center;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 24px;
+    margin-top: 30px;
+}
+
+h3{
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0;
+}
+
+.intro{
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+}
+
 
 
 #myCanvas {
@@ -17,5 +62,44 @@
     border: 2px solid black;
     border-radius: 25px;
     margin: 50px;
+}
+
+.buttons{
+    display:flex;
+    justify-content: center;
+    margin-top: 0;
+}
+
+button{
+    font-size: 16px;
+    font-weight: 100;
+    letter-spacing: 1px;
+    text-align: center;
+    padding: 15px 30px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.follower{
+    width: 100px;
+   position: relative;
+   top: 10px;
+   left: 50%;
+   transform: translate(-50%, -50%);
+}
+
+p{
+    color: rgb(181, 181, 181);
+    text-align: center;
+    font-weight: 300;
+    font-size: 14px;
+    letter-spacing: 1px;
+    line-height: 24px;
+    margin-bottom: 10px;
+}
+
+.followRequest {
+    position:relative;
+    top: -30px;
 }
 

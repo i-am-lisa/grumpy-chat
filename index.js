@@ -28,13 +28,14 @@ let isDownArrow = false;
 let isSpace = false;
 let noScore = 0;
 let startBtn = document.querySelector('#start');
+let restartBtn = document.querySelector('#restart');
 
 // create sounds
 
 let grumpyChatMoving = document.createElement('audio');
 grumpyChatMoving.src = 'sounds/grumpyChatMoving.mp3';
 
-// player size and position
+// player size and position 
 
 let playerWidth = 100;
 let playerHeight = playerWidth;
@@ -46,10 +47,29 @@ let gravity = 0.05  ;
 let groundHeight = 280;
 let jumpStrength = -4 ;
 
+// messages left 
+
+let messagesLeftTimer = 100;
+let messagesLeft = [];
+
+// messages right 
+
+let messagesRightTimer = 1;
+let messagesRight = [];
+
+// create random number for timer and store it in variable
+
+function getRandom(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 
 // player moves
 
 // event listener keeps track of wich key is clicked
+
 document.addEventListener('keydown', (event) => {
     if(event.keyCode == 39 || event.key == "ArrowRight"){
         //isLeftArrow = false;
@@ -70,12 +90,12 @@ document.addEventListener('keydown', (event) => {
     }
 
     if((event.keyCode == 32 || event.key == "Space") && playerY == groundHeight){
-        ySpeed = jumpStrength;        grumpyChatMoving.play();
+        ySpeed = jumpStrength;        
+        grumpyChatMoving.play();
     }
     
     console.log(event.key);
 });
-
 
 document.addEventListener('keyup', (event) => {
     isLeftArrow = false;
@@ -84,34 +104,7 @@ document.addEventListener('keyup', (event) => {
     isDownArrow = false;
 });
  
-// messages left size and position
 
-// let mLeftWidth = messageLeftImg.width;
-// let mLeftHeight = messageLeftImg.height;
-// let mLeftY = 200;
-// let mLeftX = 10;
-
-let messagesLeftTimer = 100;
-let messagesLeft = [];
-
-// messages right size and position
-
-// let mRightWidth = messageRightImg.width;
-// let mRightHeight = messageRightImg.height;
-// let mRightY = 250;
-// let mRightX = 400;
-
-let messagesRightTimer = 1;
-let messagesRight = [];
-
-
-// create random number for timer and store it in variable
-
-function getRandom(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
 
 //draw images
 
@@ -164,6 +157,9 @@ function draw (){
         // collision detection messages and player
 
         if(playerX + 95 >= messagesLeft[i].x && playerX <= messagesLeft[i].x + messageLeftImg.width && playerY <= messagesLeft[i].y + messageLeftImg.height && playerY + 95 >= messagesLeft[i].y){
+            clearInterval(intervalID);
+            // This is only for explanations:
+            gameOver() 
             ctx.font = '20px Verdana';
             ctx.fillText("Collision", 30, 30);
         }
@@ -195,15 +191,6 @@ function draw (){
         playerX -= incrementPlayer;
     }
 
-    // move player up and down
-
-    // if (isUpArrow && (playerY + playerHeight < canvas.height)){
-    //     playerY += incrementPlayer;
-    //     grumpyChatMoving.play();
-    // }
-    // else if (isDownArrow && (playerY > 0)){
-    //     playerY -= incrementPlayer;
-    // }
 
     // player jump (you don't see the affect until pressing space)
     if(playerY <= groundHeight){
@@ -230,16 +217,24 @@ function draw (){
 // call draw function
 draw();
 
-// create interval
+// game over function
 
-// window.addEventListener('load', () => {
-//     intervalID = setInterval(() => {
-//         requestAnimationFrame(draw)
-//      }, 10)
-// })
+function gameOver(){
+    endScreen.style.display = 'block';
+    background.style.display = 'none';
+    canvas.style.display = 'none';
+
+    restartBtn.addEventListener('click', () => {
+        location.reload();
+    })   
+}
+
+// create interval and start game 
 
 function startGame(){
-    canvas.style.display = 'block'
+    startScreen.style.display = 'none';
+    background.style.display = 'block';
+    canvas.style.display = 'block';
     startBtn.style.display = 'none';
     intervalID = setInterval(() => {
     requestAnimationFrame(draw)
@@ -248,6 +243,9 @@ function startGame(){
 
 // hides canvas
 window.addEventListener('load', () => {
+    endScreen.style.display = 'none';
+    startScreen.style.display = 'block';
+    background.style.display = 'none';
     canvas.style.display = 'none';
 
     startBtn.addEventListener('click', () => {
@@ -255,3 +253,24 @@ window.addEventListener('load', () => {
     })
     
 })
+
+
+// things I might need  otherwise delete
+
+ // move player up and down
+
+    // if (isUpArrow && (playerY + playerHeight < canvas.height)){
+    //     playerY += incrementPlayer;
+    //     grumpyChatMoving.play();
+    // }
+    // else if (isDownArrow && (playerY > 0)){
+    //     playerY -= incrementPlayer;
+    // }
+
+    // create interval
+
+// window.addEventListener('load', () => {
+//     intervalID = setInterval(() => {
+//         requestAnimationFrame(draw)
+//      }, 10)
+// })
