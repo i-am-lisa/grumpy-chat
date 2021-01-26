@@ -11,6 +11,6 @@
 		}
 	],
 	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "grumpy-chat"
+		"liveServer.settings.multiRootWorkspaceName": "pong-game"
 	}
 }

@@ -15,6 +15,9 @@ messageLeftImg.src = 'images/mLNetflix.png';
 let messageRightImg = document.createElement('img');
 messageRightImg.src = 'images/mRMondays.png';
 
+let emojisImg = document.createElement('img');
+emojisImg.src = 'images/like.png';
+
 // create sounds
 
 let grumpyChatMoving = document.createElement('audio');
@@ -42,15 +45,18 @@ let playerY = canvas.height + 200;
 let playerX = canvas.width/2 - playerWidth/2;
 let incrementPlayer = 1.5;
 let ySpeed = 0; // the pixels you move in the y axis to jump
-let gravity = 0.05  ;
+let gravity = 0.05;
 let groundHeight = canvas.height - 150;
-let jumpStrength = -4 ;
+let jumpStrength = -5;
 
 // messages 
 let messagesLeftTimer = 100;
 let messagesLeft = []; 
 let messagesRightTimer = 1;
 let messagesRight = [];
+let emojis = [];
+let emojisTimer = 5;
+
 
 // create random number for timer and store it in variable
 
@@ -114,8 +120,8 @@ function draw (){
 
     for (let i = 0; i < messagesRight.length; i++){
         ctx.drawImage(messageRightImg, messagesRight[i].x, messagesRight[i].y); 
-        messagesRight[i].x = messagesRight[i].x - 2; 
-;
+        messagesRight[i].x = messagesRight[i].x - 1; 
+
         // collision detection messages right and player
 
         if(playerX + 95 >= messagesRight[i].x && playerX <= messagesRight[i].x + messageRightImg.width && playerY <= messagesRight[i].y + messageRightImg.height && playerY + 95 >= messagesRight[i].y){
@@ -137,7 +143,7 @@ function draw (){
             x: canvas.width, 
             y: groundHeight + 50
         });
-        messagesRightTimer = getRandom(300,800);
+        messagesRightTimer = getRandom(300,1200);
     }
 
     // messages left
@@ -147,7 +153,7 @@ function draw (){
     for (let i = 0; i < messagesLeft.length; i++){
         ctx.drawImage(messageLeftImg, messagesLeft[i].x, messagesLeft[i].y); 
 
-        messagesLeft[i].x = messagesLeft[i].x + 1;
+        messagesLeft[i].x = messagesLeft[i].x + 0.8;
 
         // collision detection messages and player
 
@@ -169,10 +175,45 @@ function draw (){
     if(messagesLeftTimer == 0){
         messagesLeft.push({
             x: 0 - messageLeftImg.width, 
-            y: canvas.height - 350
+            y: canvas.height - 400
         });
-        messagesLeftTimer = getRandom(300,800);
+        messagesLeftTimer = getRandom(600,1200);
     }
+
+    // emojis
+
+    // loop over messages draws them and moves them to the right
+
+    for (let i = 0; i < emojis.length; i++){
+        ctx.drawImage(emojisImg, emojis[i].x, emojis[i].y); 
+
+        emojis[i].x = emojis[i].x + 0.2;
+
+        // collision detection messages and player
+
+        if(playerX + 95 >= emojis[i].x && playerX <= emojis[i].x + emojisImg.width && playerY <= emojis[i].y + emojisImg.height && playerY + 95 >= emojis[i].y){
+            // clearInterval(intervalID);
+            // // This is only for explanations:
+            // gameOver() 
+        }
+
+        if(emojis[i].x + emojisImg.width == canvas.width){
+            noScore++   
+        }
+    }
+
+    // create random countdown to push emojis
+
+    emojisTimer = emojisTimer - 0.5;
+
+    if(emojisTimer == 0){
+        emojis.push({
+            x: 0 - emojisImg.width, 
+            y: canvas.height - 230
+        });
+        emojisTimer = getRandom(1000,1200);
+    }
+
 
     
     // move player left and right
@@ -198,7 +239,7 @@ function draw (){
 
     // draw Highscore on screen
     ctx.font = '20px Verdana';
-    ctx.fillText('NO-Score: '+ noScore, 500, 50);
+    ctx.fillText('NO-Score: '+ noScore, 1000, 50);
 
     // just for developer to check thingsss
     // ctx.fillText('playerY: '+ playerY, 10, canvas.height - 20);
