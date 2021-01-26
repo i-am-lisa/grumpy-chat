@@ -15,7 +15,12 @@ messageLeftImg.src = 'images/mLNetflix.png';
 let messageRightImg = document.createElement('img');
 messageRightImg.src = 'images/mRMondays.png';
 
-// create canvas & defaults
+// create sounds
+
+let grumpyChatMoving = document.createElement('audio');
+grumpyChatMoving.src = 'sounds/grumpyChatMoving.mp3';
+
+// create canvas & declare valiables
 
 let canvas = document.querySelector('canvas')
 let ctx = canvas.getContext('2d')
@@ -30,30 +35,20 @@ let noScore = 0;
 let startBtn = document.querySelector('#start');
 let restartBtn = document.querySelector('#restart');
 
-// create sounds
-
-let grumpyChatMoving = document.createElement('audio');
-grumpyChatMoving.src = 'sounds/grumpyChatMoving.mp3';
-
-// player size and position 
-
+// player size, position and moves
 let playerWidth = 100;
 let playerHeight = playerWidth;
-let playerY = 280 ;
-let playerX = 350 - playerWidth/2;
+let playerY = canvas.height + 200;
+let playerX = canvas.width/2 - playerWidth/2;
 let incrementPlayer = 1.5;
 let ySpeed = 0; // the pixels you move in the y axis to jump
 let gravity = 0.05  ;
-let groundHeight = 280;
+let groundHeight = canvas.height - 150;
 let jumpStrength = -4 ;
 
-// messages left 
-
+// messages 
 let messagesLeftTimer = 100;
-let messagesLeft = [];
-
-// messages right 
-
+let messagesLeft = []; 
 let messagesRightTimer = 1;
 let messagesRight = [];
 
@@ -125,7 +120,7 @@ function draw (){
 
         if(playerX + 95 >= messagesRight[i].x && playerX <= messagesRight[i].x + messageRightImg.width && playerY <= messagesRight[i].y + messageRightImg.height && playerY + 95 >= messagesRight[i].y){
             ctx.font = '20px Verdana';
-            ctx.fillText("Collision", 30, 30);
+            ctx.fillText("COLLISION!!!", 30, 160);
         }
 
         if(messagesRight[i].x == 0){
@@ -140,14 +135,14 @@ function draw (){
     if(messagesRightTimer == 0){
         messagesRight.push({
             x: canvas.width, 
-            y: 300
+            y: groundHeight + 50
         });
         messagesRightTimer = getRandom(300,800);
     }
 
     // messages left
 
-    // loop over messages draws them and moves them to the left
+    // loop over messages draws them and moves them to the right
 
     for (let i = 0; i < messagesLeft.length; i++){
         ctx.drawImage(messageLeftImg, messagesLeft[i].x, messagesLeft[i].y); 
@@ -160,8 +155,6 @@ function draw (){
             clearInterval(intervalID);
             // This is only for explanations:
             gameOver() 
-            ctx.font = '20px Verdana';
-            ctx.fillText("Collision", 30, 30);
         }
 
         if(messagesLeft[i].x + messageLeftImg.width == 700){
@@ -175,8 +168,8 @@ function draw (){
 
     if(messagesLeftTimer == 0){
         messagesLeft.push({
-            x: 0, 
-            y: 150
+            x: 0 - messageLeftImg.width, 
+            y: canvas.height - 350
         });
         messagesLeftTimer = getRandom(300,800);
     }
