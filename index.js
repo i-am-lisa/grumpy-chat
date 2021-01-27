@@ -9,14 +9,72 @@ grumpyCatImg.src = 'images/grumpyCat.png';
 let followerImg = document.createElement('img');
 followerImg.src = 'images/follower.png';
 
-let messageLeftImg = document.createElement('img');
-messageLeftImg.src = 'images/mLNetflix.png';
+let like = document.createElement('img');
+like.src = 'images/like.png';
 
-let messageRightImg = document.createElement('img');
-messageRightImg.src = 'images/mRMondays.png';
+let alien = document.createElement('img');
+alien.src = 'images/alien.png';
 
-let emojisImg = document.createElement('img');
-emojisImg.src = 'images/like.png';
+let finger = document.createElement('img');
+finger.src = 'images/finger.png';
+
+let aubergine = document.createElement('img');
+aubergine.src = 'images/aubergine.png';
+
+let kiss = document.createElement('img');
+kiss.src = 'images/kiss.png';
+
+let teeth = document.createElement('img');
+teeth.src = 'images/teeth.png';
+
+let laugh = document.createElement('img');
+laugh.src = 'images/laugh.png';
+
+let sunnies = document.createElement('img');
+sunnies.src = 'images/sunnies.png';
+
+let monkey = document.createElement('img');
+monkey.src = 'images/monkey.png';
+
+let poo = document.createElement('img');
+poo.src = 'images/poo.png';
+
+let heart = document.createElement('img');
+heart.src = 'images/heart.png';
+
+// left images
+
+let lNetflix = document.createElement('img');
+lNetflix.src = 'images/mLNetflix.png';
+
+let lTrump = document.createElement('img');
+lTrump.src = 'images/mLDonald.png';
+
+let lDress = document.createElement('img');
+lDress.src = 'images/mLDress.png';
+
+let lFurreal = document.createElement('img');
+lFurreal.src = 'images/mLFurreal.png';
+
+let lOnly = document.createElement('img');
+lOnly.src = 'images/mLOnly.png';
+
+// right messages
+
+let rMondays = document.createElement('img');
+rMondays.src = 'images/mRMondays.png';
+
+let rCool = document.createElement('img');
+rCool.src = 'images/mRCool.png';
+
+let rRofl = document.createElement('img');
+rRofl.src = 'images/mRRofl.png';
+
+let rStartup = document.createElement('img');
+rStartup.src = 'images/mRStartup.png';
+
+let rTikTok = document.createElement('img');
+rTikTok.src = 'images/mRTikTok.png';
 
 // create sounds
 
@@ -54,8 +112,8 @@ let messagesLeftTimer = 100;
 let messagesLeft = []; 
 let messagesRightTimer = 1;
 let messagesRight = [];
-let emojis = [];
-let emojisTimer = 5;
+let messagesCenter = [];
+let messagesCenterTimer = 5;
 
 
 // create random number for timer and store it in variable
@@ -65,6 +123,9 @@ function getRandom(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+
+
 
 
 // player moves
@@ -119,14 +180,14 @@ function draw (){
     // loop over messages draws them and moves them to the left
 
     for (let i = 0; i < messagesRight.length; i++){
-        ctx.drawImage(messageRightImg, messagesRight[i].x, messagesRight[i].y); 
+        ctx.drawImage(messagesRight[i].image, messagesRight[i].x, messagesRight[i].y); 
         messagesRight[i].x = messagesRight[i].x - 1; 
 
         // collision detection messages right and player
 
-        if(playerX + 95 >= messagesRight[i].x && playerX <= messagesRight[i].x + messageRightImg.width && playerY <= messagesRight[i].y + messageRightImg.height && playerY + 95 >= messagesRight[i].y){
-            ctx.font = '20px Verdana';
-            ctx.fillText("COLLISION!!!", 30, 160);
+        if(playerX + 95 >= messagesRight[i].x && playerX <= messagesRight[i].x + messagesRight[i].image.width && playerY <= messagesRight[i].y + messagesRight[i].image.height && playerY + 95 >= messagesRight[i].y){
+            clearInterval(intervalID);
+            gameOver() 
         }
 
         if(messagesRight[i].x == 0){
@@ -139,9 +200,50 @@ function draw (){
     messagesRightTimer--;
 
     if(messagesRightTimer == 0){
+
+        // create random message image
+
+        let randomNum = getRandom(1,6);
+
+        if (randomNum == 1)
+            randomImage = rMondays;
+        else if (randomNum == 2)
+            randomImage = rCool;
+        else if (randomNum == 3)
+            randomImage = rRofl;
+        else if (randomNum == 4)
+            randomImage = rStartup;
+        else if (randomNum == 5)
+            randomImage = rTikTok;
+            else if (randomNum == 6)
+            randomImage = alien;
+        else if (randomNum == 7)
+            randomImage = finger;
+        else if (randomNum == 8)
+            randomImage = aubergine;
+        else if (randomNum == 9)
+            randomImage = kiss;
+        else if (randomNum == 10)
+            randomImage = teeth;
+        else if (randomNum == 11)
+            randomImage = laugh;
+        else if (randomNum == 12)
+            randomImage = sunnies;
+        else if (randomNum == 13)
+            randomImage = poo;
+        else if (randomNum == 14)
+            randomImage = heart;
+        else if (randomNum == 15)
+            randomImage = monkey;
+        else 
+            randomImage = like;
+        
+        
+
         messagesRight.push({
             x: canvas.width, 
-            y: groundHeight + 50
+            y: groundHeight + 50,
+            image : randomImage
         });
         messagesRightTimer = getRandom(300,1200);
     }
@@ -151,20 +253,20 @@ function draw (){
     // loop over messages draws them and moves them to the right
 
     for (let i = 0; i < messagesLeft.length; i++){
-        ctx.drawImage(messageLeftImg, messagesLeft[i].x, messagesLeft[i].y); 
+       
+         ctx.drawImage(messagesLeft[i].image, messagesLeft[i].x, messagesLeft[i].y); 
 
         messagesLeft[i].x = messagesLeft[i].x + 0.8;
 
         // collision detection messages and player
 
-        if(playerX + 95 >= messagesLeft[i].x && playerX <= messagesLeft[i].x + messageLeftImg.width && playerY <= messagesLeft[i].y + messageLeftImg.height && playerY + 95 >= messagesLeft[i].y){
+        if(playerX + 95 >= messagesLeft[i].x && playerX <= messagesLeft[i].x + messagesLeft[i].image.width && playerY <= messagesLeft[i].y + messagesLeft[i].image.height && playerY + 95 >= messagesLeft[i].y){
             clearInterval(intervalID);
-            // This is only for explanations:
             gameOver() 
         }
 
-        if(messagesLeft[i].x + messageLeftImg.width == 700){
-            noScore++   
+        if(messagesLeft[i].x + messagesLeft[i].image.width == canvas.width){
+            noScore++;   
         }
     }
 
@@ -173,49 +275,126 @@ function draw (){
     messagesLeftTimer = messagesLeftTimer - 0.5;
 
     if(messagesLeftTimer == 0){
+
+        // create random message image
+
+        let randomNum = getRandom(1,16);
+
+        if (randomNum == 1)
+            randomImage = lTrump;
+        else if (randomNum == 2)
+            randomImage = lNetflix;
+        else if (randomNum == 3)
+            randomImage = lOnly;
+        else if (randomNum == 4)
+            randomImage = lDress;
+        else if (randomNum == 5)
+            randomImage = lFurreal;
+        else if (randomNum == 6)
+            randomImage = alien;
+        else if (randomNum == 7)
+            randomImage = finger;
+        else if (randomNum == 8)
+            randomImage = aubergine;
+        else if (randomNum == 9)
+            randomImage = kiss;
+        else if (randomNum == 10)
+            randomImage = teeth;
+        else if (randomNum == 11)
+            randomImage = laugh;
+        else if (randomNum == 12)
+            randomImage = sunnies;
+        else if (randomNum == 13)
+            randomImage = poo;
+        else if (randomNum == 14)
+            randomImage = heart;
+        else if (randomNum == 15)
+            randomImage = monkey;
+        else 
+            randomImage = like;
+
         messagesLeft.push({
-            x: 0 - messageLeftImg.width, 
-            y: canvas.height - 400
+            x: 0 - randomImage.width, 
+            y: canvas.height - 400,
+            image : randomImage
         });
         messagesLeftTimer = getRandom(600,1200);
+        console.log(randomImage.width);
     }
 
-    // emojis
+    // messages center
 
-    // loop over messages draws them and moves them to the right
+    for (let i = 0; i < messagesCenter.length; i++){
+       
+        ctx.drawImage(messagesCenter[i].image, messagesCenter[i].x, messagesCenter[i].y); 
 
-    for (let i = 0; i < emojis.length; i++){
-        ctx.drawImage(emojisImg, emojis[i].x, emojis[i].y); 
+       messagesCenter[i].x = messagesCenter[i].x + 0.8;
 
-        emojis[i].x = emojis[i].x + 0.2;
+       // collision detection messages and player
 
-        // collision detection messages and player
+       if(playerX + 95 >= messagesCenter[i].x && playerX <= messagesCenter[i].x + messagesCenter[i].image.width && playerY <= messagesCenter[i].y + messagesCenter[i].image.height && playerY + 95 >= messagesCenter[i].y){
+           clearInterval(intervalID);
+           // This is only for explanations:
+           gameOver() 
+       }
 
-        if(playerX + 95 >= emojis[i].x && playerX <= emojis[i].x + emojisImg.width && playerY <= emojis[i].y + emojisImg.height && playerY + 95 >= emojis[i].y){
-            // clearInterval(intervalID);
-            // // This is only for explanations:
-            // gameOver() 
-        }
+       if(messagesCenter[i].x + messagesCenter[i].image.width == canvas.width){
+           noScore++;   
+       }
+   }
 
-        if(emojis[i].x + emojisImg.width == canvas.width){
-            noScore++   
-        }
-    }
+   // create random countdown to push messages 
 
-    // create random countdown to push emojis
+   messagesCenterTimer = messagesCenterTimer - 0.5;
 
-    emojisTimer = emojisTimer - 0.5;
+   if(messagesCenterTimer == 0){
 
-    if(emojisTimer == 0){
-        emojis.push({
-            x: 0 - emojisImg.width, 
-            y: canvas.height - 230
-        });
-        emojisTimer = getRandom(1000,1200);
-    }
+       // create random message image
 
+       let randomNum = getRandom(1,16);
 
-    
+       if (randomNum == 1)
+           randomImage = lTrump;
+       else if (randomNum == 2)
+           randomImage = lNetflix;
+       else if (randomNum == 3)
+           randomImage = lOnly;
+       else if (randomNum == 4)
+           randomImage = lDress;
+       else if (randomNum == 5)
+           randomImage = lFurreal;
+       else if (randomNum == 6)
+           randomImage = alien;
+       else if (randomNum == 7)
+           randomImage = finger;
+       else if (randomNum == 8)
+           randomImage = aubergine;
+       else if (randomNum == 9)
+           randomImage = kiss;
+       else if (randomNum == 10)
+           randomImage = teeth;
+       else if (randomNum == 11)
+           randomImage = laugh;
+       else if (randomNum == 12)
+           randomImage = sunnies;
+       else if (randomNum == 13)
+           randomImage = poo;
+       else if (randomNum == 14)
+           randomImage = heart;
+       else if (randomNum == 15)
+           randomImage = monkey;
+       else 
+           randomImage = like;
+
+       messagesCenter.push({
+           x: 0 - randomImage.width, 
+           y: canvas.height - 220,
+           image : randomImage
+       });
+       messagesCenterTimer = getRandom(600,1200);
+       console.log(randomImage.width);
+   }
+
     // move player left and right
 
     if (isRightArrow && (playerX + playerWidth < canvas.width)){
@@ -308,3 +487,4 @@ window.addEventListener('load', () => {
 //         requestAnimationFrame(draw)
 //      }, 10)
 // })
+

@@ -2,15 +2,9 @@
 	"folders": [
 		{
 			"path": "."
-		},
-		{
-			"path": "../wdft-jan-21-flappy-bird-solution"
-		},
-		{
-			"path": "../../Week2/Day4/pong-game"
 		}
 	],
 	"settings": {
-		"liveServer.settings.multiRootWorkspaceName": "pong-game"
+		"liveServer.settings.multiRootWorkspaceName": "grumpy-chat"
 	}
 }
