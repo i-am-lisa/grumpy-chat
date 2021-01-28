@@ -6,6 +6,9 @@
 let grumpyCatImg = document.createElement('img');
 grumpyCatImg.src = 'images/grumpyCat.png';
 
+let grumpyGameOverImg = document.createElement('img');
+grumpyGameOverImg.src = 'images/grumpyGameOver.png';
+
 let followerImg = document.createElement('img');
 followerImg.src = 'images/follower.png';
 
@@ -137,7 +140,8 @@ let isDownArrow = false;
 let isSpace = false;
 let noScore = 0;
 let catLives = 3;
-let startBtn = document.querySelector('#start');
+let startBtn = document.querySelector('.start');
+let blockBtn = document.querySelector('.block');
 let restartBtn = document.querySelector('#restart');
 
 // player size, position and moves
@@ -162,6 +166,7 @@ let messagesCenterTimer = 5;
 
 let catHearts = heart
 let catHeartsWidth = 25;
+
 
 
 // create random number for timer and store it in variable
@@ -529,7 +534,7 @@ function draw (){
     }
 
     // draw Highscore on screen
-    ctx.font = '20px Verdana';
+    ctx.font = 'bold 20px Rubik';
     ctx.fillText('NO-Score: '+ noScore, 1000, 50);
     ctx.fillText('Cat Lives: '+ catLives, 530, 50);
 
@@ -560,6 +565,7 @@ function draw (){
 // call draw function
 draw();
 
+
 // game over function
 
 function gameOver(){
@@ -578,7 +584,6 @@ function startGame(){
     startScreen.style.display = 'none';
     background.style.display = 'block';
     canvas.style.display = 'block';
-    startBtn.style.display = 'none';
     intervalID = setInterval(() => {
     requestAnimationFrame(draw)
     }, 10)
@@ -593,7 +598,11 @@ window.addEventListener('load', () => {
 
     startBtn.addEventListener('click', () => {
         startGame()
-    })   
+    }) 
+    
+    blockBtn.addEventListener('click', () => {
+        startGame()
+    }) 
 })
 
 
