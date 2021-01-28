@@ -121,17 +121,8 @@ grumpyChatMoving.src = 'sounds/grumpyChatMoving.mp3';
 let newMessageSound = document.createElement('audio');
 newMessageSound.src = 'sounds/newMessage.mp3';
 
-let scaredFollower = document.createElement('audio');
-scaredFollower.src = 'sounds/scaredFollower.mp3';
-
-let scaredFollower2 = document.createElement('audio');
-scaredFollower2.src = 'sounds/catScream.mp3';
-
-let scaredFollower3 = document.createElement('audio');
-scaredFollower3.src = 'sounds/catScream2.mp3';
-
 let scaredFollower4 = document.createElement('audio');
-scaredFollower4.src = 'sounds/catScream3.mp3';
+scaredFollower4.src = 'sounds/catScream6.mp3';
 
 // create canvas & declare valiables
 
