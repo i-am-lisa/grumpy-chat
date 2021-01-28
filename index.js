@@ -169,6 +169,9 @@ let messagesRight = [];
 let messagesCenter = [];
 let messagesCenterTimer = 5;
 
+let catHearts = heart
+let catHeartsWidth = 25;
+
 
 // create random number for timer and store it in variable
 
@@ -426,7 +429,7 @@ function draw (){
        
         ctx.drawImage(messagesCenter[i].image, messagesCenter[i].x, messagesCenter[i].y); 
 
-       messagesCenter[i].x = messagesCenter[i].x + 2;
+       messagesCenter[i].x = messagesCenter[i].x + 2.5;
 
        // collision detection messages and player
 
@@ -537,12 +540,28 @@ function draw (){
     // draw Highscore on screen
     ctx.font = '20px Verdana';
     ctx.fillText('NO-Score: '+ noScore, 1000, 50);
-    ctx.fillText('Cat Lives: '+ catLives, 30, 170);
+    ctx.fillText('Cat Lives: '+ catLives, 530, 50);
+
+    if (catLives == 3){
+        ctx.drawImage(catHearts, 540, 70, 25, 25 ); 
+        ctx.drawImage(catHearts, 580, 70, 25, 25 ); 
+        ctx.drawImage(catHearts, 620, 70, 25, 25 );
+    }
+    
+    else if (catLives == 2){
+        ctx.drawImage(catHearts, 580, 70, 25, 25 ); 
+        ctx.drawImage(catHearts, 620, 70, 25, 25 );
+    }
+
+    else if (catLives == 1){ 
+        ctx.drawImage(catHearts, 620, 70, 25, 25 );
+    }
 
 
     // just for developer to check thingsss
     // ctx.fillText('playerY: '+ playerY, 10, canvas.height - 20);
     // ctx.fillText('leftTimer: '+ messagesRightTimer, 10, canvas.height - 20);
+    // ctx.fillText('leftMove: '+ messagesRightTimer, 10, canvas.height - 20);
     // ctx.fillText('rightTimer: '+ messagesLeftTimer, 10, canvas.height - 60);
     // ctx.fillText('rightTimer: '+ messagesLeftTimer, 10, canvas.height - 60);
 }
