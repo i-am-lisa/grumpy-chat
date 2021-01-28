@@ -42,6 +42,8 @@ poo.src = 'images/poo.png';
 let heart = document.createElement('img');
 heart.src = 'images/heart.png';
 
+
+
 // left images
 
 let lNetflix = document.createElement('img');
@@ -58,6 +60,24 @@ lFurreal.src = 'images/mLFurreal.png';
 
 let lOnly = document.createElement('img');
 lOnly.src = 'images/mLOnly.png';
+
+let lAmazing = document.createElement('img');
+lAmazing.src = 'images/mLAmazing.png';
+
+let lBieber = document.createElement('img');
+lBieber.src = 'images/mLBieber.png';
+
+let lCorona = document.createElement('img');
+lCorona.src = 'images/mLCorona.png';
+
+let lDog = document.createElement('img');
+lDog.src = 'images/mLDog.png';
+
+let lNoDog = document.createElement('img');
+lNoDog.src = 'images/mLNoDog.png';
+
+let lSnacks = document.createElement('img');
+lSnacks.src = 'images/mLSnacks.png';
 
 // right messages
 
@@ -76,10 +96,42 @@ rStartup.src = 'images/mRStartup.png';
 let rTikTok = document.createElement('img');
 rTikTok.src = 'images/mRTikTok.png';
 
+let rCoronaCorona = document.createElement('img');
+rCoronaCorona.src = 'images/mRCoronaCorona.png';
+
+let rHobbies = document.createElement('img');
+rHobbies.src = 'images/mRHobbies.png';
+
+let rLove = document.createElement('img');
+rLove.src = 'images/mRLove.png';
+
+let rSyntax = document.createElement('img');
+rSyntax.src = 'images/mRSyntax.png';
+
+let rYes = document.createElement('img');
+rYes.src = 'images/mRYes.png';
+
+
+
 // create sounds
 
 let grumpyChatMoving = document.createElement('audio');
 grumpyChatMoving.src = 'sounds/grumpyChatMoving.mp3';
+
+let newMessageSound = document.createElement('audio');
+newMessageSound.src = 'sounds/newMessage.mp3';
+
+let scaredFollower = document.createElement('audio');
+scaredFollower.src = 'sounds/scaredFollower.mp3';
+
+let scaredFollower2 = document.createElement('audio');
+scaredFollower2.src = 'sounds/catScream.mp3';
+
+let scaredFollower3 = document.createElement('audio');
+scaredFollower3.src = 'sounds/catScream2.mp3';
+
+let scaredFollower4 = document.createElement('audio');
+scaredFollower4.src = 'sounds/catScream3.mp3';
 
 // create canvas & declare valiables
 
@@ -93,6 +145,7 @@ let isUpArrow = false;
 let isDownArrow = false;
 let isSpace = false;
 let noScore = 0;
+let catLives = 3;
 let startBtn = document.querySelector('#start');
 let restartBtn = document.querySelector('#restart');
 
@@ -106,6 +159,7 @@ let ySpeed = 0; // the pixels you move in the y axis to jump
 let gravity = 0.05;
 let groundHeight = canvas.height - 150;
 let jumpStrength = -5;
+let playerCanReceiveDamage = true;
 
 // messages 
 let messagesLeftTimer = 100;
@@ -182,12 +236,22 @@ function draw (){
     for (let i = 0; i < messagesRight.length; i++){
         ctx.drawImage(messagesRight[i].image, messagesRight[i].x, messagesRight[i].y); 
         messagesRight[i].x = messagesRight[i].x - 1; 
+        
 
         // collision detection messages right and player
 
-        if(playerX + 95 >= messagesRight[i].x && playerX <= messagesRight[i].x + messagesRight[i].image.width && playerY <= messagesRight[i].y + messagesRight[i].image.height && playerY + 95 >= messagesRight[i].y){
-            clearInterval(intervalID);
-            gameOver() 
+        if(playerCanReceiveDamage == true && playerX + 95 >= messagesRight[i].x && playerX <= messagesRight[i].x + messagesRight[i].image.width && playerY <= messagesRight[i].y + messagesRight[i].image.height && playerY + 95 >= messagesRight[i].y){
+            playerCanReceiveDamage = false;
+            scaredFollower4.play();
+            catLives--
+            setTimeout(function (){
+                playerCanReceiveDamage = true;
+            }, 3000);
+        }
+
+        if (catLives < 0){
+        clearInterval(intervalID);
+            gameOver(); 
         }
 
         if(messagesRight[i].x == 0){
@@ -201,9 +265,11 @@ function draw (){
 
     if(messagesRightTimer == 0){
 
+        newMessageSound.play();
+
         // create random message image
 
-        let randomNum = getRandom(1,6);
+        let randomNum = getRandom(1,21);
 
         if (randomNum == 1)
             randomImage = rMondays;
@@ -212,10 +278,10 @@ function draw (){
         else if (randomNum == 3)
             randomImage = rRofl;
         else if (randomNum == 4)
-            randomImage = rStartup;
+            randomImage = rCoronaCorona;
         else if (randomNum == 5)
             randomImage = rTikTok;
-            else if (randomNum == 6)
+        else if (randomNum == 6)
             randomImage = alien;
         else if (randomNum == 7)
             randomImage = finger;
@@ -235,6 +301,16 @@ function draw (){
             randomImage = heart;
         else if (randomNum == 15)
             randomImage = monkey;
+        else if (randomNum == 16)
+            randomImage = rStartup;
+        else if (randomNum == 17)
+            randomImage = rHobbies;
+        else if (randomNum == 18)
+            randomImage = rLove;
+        else if (randomNum == 19)
+            randomImage = rSyntax;
+        else if (randomNum == 20)
+            randomImage = rYes;
         else 
             randomImage = like;
         
@@ -260,9 +336,19 @@ function draw (){
 
         // collision detection messages and player
 
-        if(playerX + 95 >= messagesLeft[i].x && playerX <= messagesLeft[i].x + messagesLeft[i].image.width && playerY <= messagesLeft[i].y + messagesLeft[i].image.height && playerY + 95 >= messagesLeft[i].y){
+        if(playerCanReceiveDamage == true && playerX + 95 >= messagesLeft[i].x && playerX <= messagesLeft[i].x + messagesLeft[i].image.width && playerY <= messagesLeft[i].y + messagesLeft[i].image.height && playerY + 95 >= messagesLeft[i].y){
+            playerCanReceiveDamage = false;
+            scaredFollower4.play();
+
+            catLives--
+            setTimeout(function (){
+                playerCanReceiveDamage = true;
+            }, 3000);
+        }
+
+        if (catLives < 0){
             clearInterval(intervalID);
-            gameOver() 
+                gameOver(); 
         }
 
         if(messagesLeft[i].x + messagesLeft[i].image.width == canvas.width){
@@ -272,13 +358,15 @@ function draw (){
 
     // create random countdown to push messages 
 
-    messagesLeftTimer = messagesLeftTimer - 0.5;
+    messagesLeftTimer = messagesLeftTimer - 1;
 
     if(messagesLeftTimer == 0){
 
+        newMessageSound.play();
+
         // create random message image
 
-        let randomNum = getRandom(1,16);
+        let randomNum = getRandom(1,21);
 
         if (randomNum == 1)
             randomImage = lTrump;
@@ -310,6 +398,16 @@ function draw (){
             randomImage = heart;
         else if (randomNum == 15)
             randomImage = monkey;
+        else if (randomNum == 16)
+            randomImage = lCorona;
+        else if (randomNum == 17)
+            randomImage = lDog;
+        else if (randomNum == 18)
+            randomImage = lNoDog;
+        else if (randomNum == 19)
+            randomImage = lSnacks;
+        else if (randomNum == 20)
+            randomImage = lBieber;
         else 
             randomImage = like;
 
@@ -318,7 +416,7 @@ function draw (){
             y: canvas.height - 400,
             image : randomImage
         });
-        messagesLeftTimer = getRandom(600,1200);
+        messagesLeftTimer = getRandom(400,1200);
         console.log(randomImage.width);
     }
 
@@ -328,15 +426,23 @@ function draw (){
        
         ctx.drawImage(messagesCenter[i].image, messagesCenter[i].x, messagesCenter[i].y); 
 
-       messagesCenter[i].x = messagesCenter[i].x + 0.8;
+       messagesCenter[i].x = messagesCenter[i].x + 2;
 
        // collision detection messages and player
 
-       if(playerX + 95 >= messagesCenter[i].x && playerX <= messagesCenter[i].x + messagesCenter[i].image.width && playerY <= messagesCenter[i].y + messagesCenter[i].image.height && playerY + 95 >= messagesCenter[i].y){
-           clearInterval(intervalID);
-           // This is only for explanations:
-           gameOver() 
+       if(playerCanReceiveDamage == true && playerX + 95 >= messagesCenter[i].x && playerX <= messagesCenter[i].x + messagesCenter[i].image.width && playerY <= messagesCenter[i].y + messagesCenter[i].image.height && playerY + 95 >= messagesCenter[i].y){
+        playerCanReceiveDamage = false;
+        scaredFollower4.play();
+        catLives--
+        setTimeout(function (){
+            playerCanReceiveDamage = true;
+        }, 3000);
        }
+
+       if (catLives < 0){
+        clearInterval(intervalID);
+            gameOver(); 
+        }
 
        if(messagesCenter[i].x + messagesCenter[i].image.width == canvas.width){
            noScore++;   
@@ -345,13 +451,15 @@ function draw (){
 
    // create random countdown to push messages 
 
-   messagesCenterTimer = messagesCenterTimer - 0.5;
+   messagesCenterTimer = messagesCenterTimer - 1;
 
    if(messagesCenterTimer == 0){
 
+        newMessageSound.play();
+
        // create random message image
 
-       let randomNum = getRandom(1,16);
+       let randomNum = getRandom(1,21);
 
        if (randomNum == 1)
            randomImage = lTrump;
@@ -383,15 +491,25 @@ function draw (){
            randomImage = heart;
        else if (randomNum == 15)
            randomImage = monkey;
+        else if (randomNum == 16)
+            randomImage = lCorona;
+        else if (randomNum == 17)
+            randomImage = lDog;
+        else if (randomNum == 18)
+            randomImage = lNoDog;
+        else if (randomNum == 19)
+            randomImage = lSnacks;
+        else if (randomNum == 20)
+            randomImage = lBieber;
        else 
            randomImage = like;
 
        messagesCenter.push({
            x: 0 - randomImage.width, 
-           y: canvas.height - 220,
+           y: canvas.height - 250,
            image : randomImage
        });
-       messagesCenterTimer = getRandom(600,1200);
+       messagesCenterTimer = getRandom(300,600);
        console.log(randomImage.width);
    }
 
@@ -419,6 +537,8 @@ function draw (){
     // draw Highscore on screen
     ctx.font = '20px Verdana';
     ctx.fillText('NO-Score: '+ noScore, 1000, 50);
+    ctx.fillText('Cat Lives: '+ catLives, 30, 170);
+
 
     // just for developer to check thingsss
     // ctx.fillText('playerY: '+ playerY, 10, canvas.height - 20);
@@ -463,28 +583,7 @@ window.addEventListener('load', () => {
 
     startBtn.addEventListener('click', () => {
         startGame()
-    })
-    
+    })   
 })
 
-
-// things I might need  otherwise delete
-
- // move player up and down
-
-    // if (isUpArrow && (playerY + playerHeight < canvas.height)){
-    //     playerY += incrementPlayer;
-    //     grumpyChatMoving.play();
-    // }
-    // else if (isDownArrow && (playerY > 0)){
-    //     playerY -= incrementPlayer;
-    // }
-
-    // create interval
-
-// window.addEventListener('load', () => {
-//     intervalID = setInterval(() => {
-//         requestAnimationFrame(draw)
-//      }, 10)
-// })
 
